@@ -1,0 +1,3 @@
+# Desk.com Case Pop
+
+Case Pop is a Google Chrome extension, it intercepts but doesn't stop clicks on case direct links. While the case is loaded in a new tab, the extension will check all your other tabs and if it finds a tab running the Desk.com Agent it'll populate the agent with the current case. The Agent tab will automatically be brought to focus and the tab which was created by clicking on the direct link is going to be closed.
