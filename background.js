@@ -40,21 +40,21 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
               // find the case id in the response text
               case_id = xhr.responseText.match(/tickets\/([0-9]+)\/edit/m)[1];
               if (case_id) {
-                // build the script to load the case
-                script = [
-                  "var s,ref;",
-                  "s=document.createElement('script');",
-                  "s.type='text/javascript';",
-                  "s.innerText='(function(){ticketEditTableView(" + case_id + ",document.createEvent(\"MouseEvents\"));})();';",
-                  "ref=document.getElementsByTagName('script')[0];",
-                  "ref.parentNode.insertBefore(s,ref);"
-                ].join('');
-                // window.ticketShowTableView(' + case_id + ', document.createEvent(\'MouseEvents\'))
-                chrome.tabs.executeScript(tab.id, { code: script }, function() {
-                  // activate the agent tab
-                  chrome.tabs.update(tab.id, { selected: true });
-                  // close tabs that have been opened by this request
-                  chrome.tabs.remove(tabId);
+                // close the original tab *should fix the read-only problem*
+                chrome.tabs.remove(tabId);
+                // activate the agent tab
+                chrome.tabs.update(tab.id, { selected: true }, function() {
+                  // build the script to load the case
+                  script = [
+                    "var s,ref;",
+                    "s=document.createElement('script');",
+                    "s.type='text/javascript';",
+                    "s.innerText='(function(){ticketEditTableView(" + case_id + ",document.createEvent(\"MouseEvents\"));})();';",
+                    "ref=document.getElementsByTagName('script')[0];",
+                    "ref.parentNode.insertBefore(s,ref);"
+                  ].join('');
+                  // window.ticketShowTableView(' + case_id + ', document.createEvent(\'MouseEvents\'))
+                  chrome.tabs.executeScript(tab.id, { code: script });
                 });
               }
             }
