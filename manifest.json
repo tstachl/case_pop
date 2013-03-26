@@ -2,7 +2,7 @@
   "manifest_version": 2,
   
   "name": "Desk.com Case Pop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "It makes a case pop!",
   "icons": {
     "128": "icons/icon128.png"
